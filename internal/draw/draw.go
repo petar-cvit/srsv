@@ -6,7 +6,6 @@ import (
 	"os/exec"
 
 	"github.com/TwiN/go-color"
-
 	"lab2/internal/semaphore"
 	"lab2/internal/utils"
 )
@@ -39,13 +38,23 @@ func (d *Drawer) DrawCrossing(time int, semaphores map[string]*semaphore.Semapho
 
 	fmt.Println("\t\t\t|\t¦\t¦\t|\t¦\t|\t\t\t")
 	fmt.Println("\t\t\t|\t¦\t¦\t|\t¦\t|\t\t\t")
+	fmt.Println("\t\t      " +
+		drawSemaphore(semaphores[utils.PedestrianNorth]) +
+		" |\t¦\t¦\t|\t¦\t| " +
+		drawSemaphore(semaphores[utils.PedestrianNorth]) +
+		"\t\t\t")
 	fmt.Println("\t\t\t|\t¦\t¦\t|\t¦\t|\t\t\t")
-	fmt.Println("\t\t\t" +
-		"|   " + drawSemaphore(semaphores[utils.SouthRight]) + "   " +
+
+	fmt.Println("\t\t  " +
+		drawSemaphore(semaphores[utils.PedestrianWest]) +
+		"     |   " + drawSemaphore(semaphores[utils.SouthLeft]) + "   " +
 		"¦   " + drawSemaphore(semaphores[utils.StraightVertical]) + "   " +
-		"¦   " + drawSemaphore(semaphores[utils.SouthLeft]) + "   " +
-		"|\t¦\t|\t\t\t",
+		"¦   " + drawSemaphore(semaphores[utils.SouthRight]) + "   " +
+		"|\t¦\t|     " +
+		drawSemaphore(semaphores[utils.PedestrianEast]) +
+		" \t\t\t",
 	)
+
 	fmt.Println("------------------------\t\t\t\t\t------------------------")
 	fmt.Println("\t\t\t\t\t\t\t\t" + drawSemaphore(semaphores[utils.WestRight]))
 	fmt.Println("- - - - - - - - - - - - \t\t\t\t\t- - - - - - - - - - - - ")
@@ -60,14 +69,23 @@ func (d *Drawer) DrawCrossing(time int, semaphores map[string]*semaphore.Semapho
 	fmt.Println("- - - - - - - - - - - - \t\t\t\t\t- - - - - - - - - - - - ")
 	fmt.Println("\t\t       " + drawSemaphore(semaphores[utils.WestRight]))
 	fmt.Println("------------------------\t\t\t\t\t------------------------")
-	fmt.Println("\t\t\t|\t¦\t" +
+
+	fmt.Println("\t\t  " +
+		drawSemaphore(semaphores[utils.PedestrianWest]) + "     |\t¦\t" +
 		"|   " + drawSemaphore(semaphores[utils.SouthRight]) + "   " +
 		"¦   " + drawSemaphore(semaphores[utils.StraightVertical]) + "   " +
 		"¦   " + drawSemaphore(semaphores[utils.SouthLeft]) + "   " +
-		"|\t\t\t",
+		"|     " +
+		drawSemaphore(semaphores[utils.PedestrianEast]) +
+		" \t\t\t",
 	)
+
 	fmt.Println("\t\t\t|\t¦\t|\t¦\t¦\t|\t\t\t")
-	fmt.Println("\t\t\t|\t¦\t|\t¦\t¦\t|\t\t\t")
+	fmt.Println("\t\t      " +
+		drawSemaphore(semaphores[utils.PedestrianSouth]) +
+		" |\t¦\t|\t¦\t¦\t| " +
+		drawSemaphore(semaphores[utils.PedestrianSouth]) +
+		"\t\t\t")
 	fmt.Println("\t\t\t|\t¦\t|\t¦\t¦\t|\t\t\t")
 	fmt.Println("\t\t\t|\t¦\t|\t¦\t¦\t|\t\t\t")
 }

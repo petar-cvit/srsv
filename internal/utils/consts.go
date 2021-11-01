@@ -4,7 +4,7 @@ package utils
 const Red = 0
 const Green = 1
 
-// Semaphores
+// vehicle Semaphores
 const StraightHorizontal = "straightHorizontal"
 const StraightVertical = "straightVertical"
 
@@ -13,3 +13,9 @@ const SouthRight = "southRight"
 
 const WestLeft = "westLeft"
 const SouthLeft = "southLeft"
+
+// pedestrian Semaphores
+const PedestrianNorth = "pedestrianNorth"
+const PedestrianEast = "pedestrianEast"
+const PedestrianWest = "pedestrianWest"
+const PedestrianSouth = "pedestrianSouth"
