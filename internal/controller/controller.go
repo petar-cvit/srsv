@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"github.com/TwiN/go-color"
 	"time"
 
 	"lab2/internal/draw"
@@ -15,11 +14,11 @@ type Controller struct {
 }
 
 func New() {
-	semaphores := createSemaphores()
-	spinSemaphores(semaphores)
-
 	drawer := draw.New()
 	go drawer.Start()
+
+	semaphores := createSemaphores(drawer.SemaphoreChan)
+	spinSemaphores(semaphores)
 
 	go func() {
 		t := 0
@@ -42,15 +41,6 @@ func New() {
 			semaphores[utils.PedestrianNorth].StateChan <- utils.Green
 			semaphores[utils.PedestrianSouth].StateChan <- utils.Green
 
-			drawer.Input <- &utils.Payload{
-				Time:       t,
-				Semaphores: semaphores,
-				Crossing: map[string]string{
-					utils.StraightHorizontalToWest: color.Ize(color.Yellow, "A"),
-					utils.StraightHorizontalToEast: color.Ize(color.Yellow, "A"),
-				},
-			}
-
 			time.Sleep(time.Second * 3)
 			t++
 
@@ -67,11 +57,6 @@ func New() {
 			semaphores[utils.PedestrianWest].StateChan <- utils.Red
 			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
-
-			drawer.Input <- &utils.Payload{
-				Time:       t,
-				Semaphores: semaphores,
-			}
 
 			time.Sleep(time.Second * 3)
 			t++
@@ -90,15 +75,6 @@ func New() {
 			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
 
-			drawer.Input <- &utils.Payload{
-				Time:       t,
-				Semaphores: semaphores,
-				Crossing: map[string]string{
-					utils.StraightVerticalToSouth: color.Ize(color.Yellow, "A"),
-					utils.StraightVerticalToNorth: color.Ize(color.Yellow, "A"),
-				},
-			}
-
 			time.Sleep(time.Second * 3)
 			t++
 
@@ -115,31 +91,25 @@ func New() {
 			semaphores[utils.PedestrianWest].StateChan <- utils.Red
 			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
-
-			drawer.Input <- &utils.Payload{
-				Time:       t,
-				Semaphores: semaphores,
-			}
-
 		}
 	}()
 }
 
-func createSemaphores() map[string]*semaphore.Semaphore {
+func createSemaphores(drawChan chan *utils.SemaphoreMessage) map[string]*semaphore.Semaphore {
 	semaphores := make(map[string]*semaphore.Semaphore)
-	semaphores[utils.StraightHorizontal] = semaphore.New(utils.Green)
-	semaphores[utils.StraightVertical] = semaphore.New(utils.Green)
+	semaphores[utils.StraightHorizontal] = semaphore.New(utils.Red, utils.StraightHorizontal, drawChan)
+	semaphores[utils.StraightVertical] = semaphore.New(utils.Red, utils.StraightVertical, drawChan)
 
-	semaphores[utils.WestRight] = semaphore.New(utils.Red)
-	semaphores[utils.SouthRight] = semaphore.New(utils.Red)
+	semaphores[utils.WestRight] = semaphore.New(utils.Red, utils.WestRight, drawChan)
+	semaphores[utils.SouthRight] = semaphore.New(utils.Red, utils.SouthRight, drawChan)
 
-	semaphores[utils.WestLeft] = semaphore.New(utils.Red)
-	semaphores[utils.SouthLeft] = semaphore.New(utils.Red)
+	semaphores[utils.WestLeft] = semaphore.New(utils.Red, utils.WestLeft, drawChan)
+	semaphores[utils.SouthLeft] = semaphore.New(utils.Red, utils.SouthLeft, drawChan)
 
-	semaphores[utils.PedestrianNorth] = semaphore.New(utils.Red)
-	semaphores[utils.PedestrianEast] = semaphore.New(utils.Red)
-	semaphores[utils.PedestrianWest] = semaphore.New(utils.Red)
-	semaphores[utils.PedestrianSouth] = semaphore.New(utils.Red)
+	semaphores[utils.PedestrianNorth] = semaphore.New(utils.Red, utils.PedestrianNorth, drawChan)
+	semaphores[utils.PedestrianEast] = semaphore.New(utils.Red, utils.PedestrianEast, drawChan)
+	semaphores[utils.PedestrianWest] = semaphore.New(utils.Red, utils.PedestrianWest, drawChan)
+	semaphores[utils.PedestrianSouth] = semaphore.New(utils.Red, utils.PedestrianSouth, drawChan)
 
 	return semaphores
 }

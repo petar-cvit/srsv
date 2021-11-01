@@ -22,12 +22,16 @@ const PedestrianEast = "pedestrianEast"
 const PedestrianWest = "pedestrianWest"
 const PedestrianSouth = "pedestrianSouth"
 
-// crossing
+// crossing or waiting
 const StraightHorizontalToWest = "straightHorizontalToWest"
 const StraightHorizontalToEast = "straightHorizontalToEast"
 
 const StraightVerticalToNorth = "straightVericalToNorth"
 const StraightVerticalToSouth = "straightVericalToSouth"
+
+// waiting status
+const NotWaiting = 0
+const Waiting = 1
 
 func CarMessage(postition string) string {
 	return fmt.Sprintf("car-%v", postition)

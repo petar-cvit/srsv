@@ -8,30 +8,35 @@ import (
 
 	"github.com/TwiN/go-color"
 
-	"lab2/internal/semaphore"
 	"lab2/internal/utils"
 )
 
 type Drawer struct {
-	Input chan *utils.Payload
+	SemaphoreChan chan *utils.SemaphoreMessage
+
+	semaphores map[string]int
+	waiting    map[string]int
 }
 
 func New() *Drawer {
 	return &Drawer{
-		Input: make(chan *utils.Payload),
+		SemaphoreChan: make(chan *utils.SemaphoreMessage),
+		semaphores:    createDrawableSemaphors(),
+		waiting:       createWaiting(),
 	}
 }
 
 func (d *Drawer) Start() {
 	for {
 		select {
-		case payload := <-d.Input:
-			d.DrawCrossing(payload.Time, payload.Semaphores, payload.Crossing)
+		case payload := <-d.SemaphoreChan:
+			d.semaphores[payload.Position] = payload.State
+			d.DrawCrossing(0, d.semaphores, map[string]string{})
 		}
 	}
 }
 
-func (d *Drawer) DrawCrossing(time int, semaphores map[string]*semaphore.Semaphore, crossing map[string]string) {
+func (d *Drawer) DrawCrossing(time int, semaphores map[string]int, crossing map[string]string) {
 	c := exec.Command("clear")
 	c.Stdout = os.Stdout
 	c.Run()
@@ -192,8 +197,8 @@ func (d *Drawer) DrawCrossing(time int, semaphores map[string]*semaphore.Semapho
 		"   ¦\t|\t\t\t")
 }
 
-func drawSemaphore(sem *semaphore.Semaphore) string {
-	if sem.Current == utils.Red {
+func drawSemaphore(sem int) string {
+	if sem == utils.Red {
 		return color.Ize(color.Red, "R")
 	}
 
@@ -214,4 +219,28 @@ func drawSingleVertical(key string, crossing map[string]string) string {
 	}
 
 	return " "
+}
+
+func createDrawableSemaphors() map[string]int {
+	return map[string]int{
+		utils.StraightHorizontal: 0,
+		utils.StraightVertical:   0,
+		utils.WestRight:          0,
+		utils.SouthRight:         0,
+		utils.WestLeft:           0,
+		utils.SouthLeft:          0,
+		utils.PedestrianNorth:    0,
+		utils.PedestrianEast:     0,
+		utils.PedestrianWest:     0,
+		utils.PedestrianSouth:    0,
+	}
+}
+
+func createWaiting() map[string]int {
+	return map[string]int{
+		utils.StraightHorizontalToWest: 0,
+		utils.StraightHorizontalToEast: 0,
+		utils.StraightVerticalToNorth:  0,
+		utils.StraightVerticalToSouth:  0,
+	}
 }
