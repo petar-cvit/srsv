@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/TwiN/go-color"
 	"time"
 
 	"lab2/internal/draw"
@@ -44,6 +45,10 @@ func New() {
 			drawer.Input <- &utils.Payload{
 				Time:       t,
 				Semaphores: semaphores,
+				Crossing: map[string]string{
+					utils.StraightHorizontalToWest: color.Ize(color.Yellow, "A"),
+					utils.StraightHorizontalToEast: color.Ize(color.Yellow, "A"),
+				},
 			}
 
 			time.Sleep(time.Second * 3)
@@ -88,6 +93,10 @@ func New() {
 			drawer.Input <- &utils.Payload{
 				Time:       t,
 				Semaphores: semaphores,
+				Crossing: map[string]string{
+					utils.StraightVerticalToSouth: color.Ize(color.Yellow, "A"),
+					utils.StraightVerticalToNorth: color.Ize(color.Yellow, "A"),
+				},
 			}
 
 			time.Sleep(time.Second * 3)

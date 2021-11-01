@@ -1,5 +1,7 @@
 package utils
 
+import "fmt"
+
 // Semaphore states
 const Red = 0
 const Green = 1
@@ -19,3 +21,14 @@ const PedestrianNorth = "pedestrianNorth"
 const PedestrianEast = "pedestrianEast"
 const PedestrianWest = "pedestrianWest"
 const PedestrianSouth = "pedestrianSouth"
+
+// crossing
+const StraightHorizontalToWest = "straightHorizontalToWest"
+const StraightHorizontalToEast = "straightHorizontalToEast"
+
+const StraightVerticalToNorth = "straightVericalToNorth"
+const StraightVerticalToSouth = "straightVericalToSouth"
+
+func CarMessage(postition string) string {
+	return fmt.Sprintf("car-%v", postition)
+}
