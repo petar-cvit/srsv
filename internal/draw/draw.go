@@ -2,6 +2,9 @@ package draw
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
+
 	"github.com/TwiN/go-color"
 	"lab2/internal/semaphore"
 	"lab2/internal/utils"
@@ -27,9 +30,9 @@ func (d *Drawer) Start() {
 }
 
 func (d *Drawer) DrawCrossing(time int, semaphores map[string]*semaphore.Semaphore) {
-	//c := exec.Command("clear")
-	//c.Stdout = os.Stdout
-	//c.Run()
+	c := exec.Command("clear")
+	c.Stdout = os.Stdout
+	c.Run()
 
 	fmt.Println(fmt.Sprintf("time: %v", time))
 
