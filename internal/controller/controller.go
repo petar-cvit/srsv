@@ -20,6 +20,9 @@ func New() {
 	semaphores := createSemaphores(drawer.SemaphoreChan)
 	spinSemaphores(semaphores)
 
+	generator := NewGenerator(nil, nil, drawer.WaitingChan)
+	generator.Start()
+
 	go func() {
 		t := 0
 
