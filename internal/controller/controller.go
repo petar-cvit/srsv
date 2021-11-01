@@ -23,96 +23,96 @@ func New() {
 	go func() {
 		t := 0
 
-		//for {
-		time.Sleep(time.Second * 3)
-		t++
+		for {
+			time.Sleep(time.Second * 3)
+			t++
 
-		semaphores[utils.StraightHorizontal].StateChan <- utils.Green
-		semaphores[utils.StraightVertical].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontal].StateChan <- utils.Green
+			semaphores[utils.StraightVertical].StateChan <- utils.Red
 
-		semaphores[utils.WestRight].StateChan <- utils.Red
-		semaphores[utils.SouthRight].StateChan <- utils.Red
+			semaphores[utils.WestRight].StateChan <- utils.Red
+			semaphores[utils.SouthRight].StateChan <- utils.Red
 
-		semaphores[utils.WestLeft].StateChan <- utils.Red
-		semaphores[utils.SouthLeft].StateChan <- utils.Red
+			semaphores[utils.WestLeft].StateChan <- utils.Red
+			semaphores[utils.SouthLeft].StateChan <- utils.Red
 
-		semaphores[utils.PedestrianEast].StateChan <- utils.Red
-		semaphores[utils.PedestrianWest].StateChan <- utils.Red
-		semaphores[utils.PedestrianNorth].StateChan <- utils.Green
-		semaphores[utils.PedestrianSouth].StateChan <- utils.Green
+			semaphores[utils.PedestrianEast].StateChan <- utils.Red
+			semaphores[utils.PedestrianWest].StateChan <- utils.Red
+			semaphores[utils.PedestrianNorth].StateChan <- utils.Green
+			semaphores[utils.PedestrianSouth].StateChan <- utils.Green
 
-		drawer.Input <- &utils.Payload{
-			Time:       t,
-			Semaphores: semaphores,
+			drawer.Input <- &utils.Payload{
+				Time:       t,
+				Semaphores: semaphores,
+			}
+
+			time.Sleep(time.Second * 3)
+			t++
+
+			semaphores[utils.StraightHorizontal].StateChan <- utils.Red
+			semaphores[utils.StraightVertical].StateChan <- utils.Red
+
+			semaphores[utils.WestRight].StateChan <- utils.Red
+			semaphores[utils.SouthRight].StateChan <- utils.Red
+
+			semaphores[utils.WestLeft].StateChan <- utils.Green
+			semaphores[utils.SouthLeft].StateChan <- utils.Green
+
+			semaphores[utils.PedestrianEast].StateChan <- utils.Red
+			semaphores[utils.PedestrianWest].StateChan <- utils.Red
+			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
+			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
+
+			drawer.Input <- &utils.Payload{
+				Time:       t,
+				Semaphores: semaphores,
+			}
+
+			time.Sleep(time.Second * 3)
+			t++
+
+			semaphores[utils.StraightHorizontal].StateChan <- utils.Red
+			semaphores[utils.StraightVertical].StateChan <- utils.Green
+
+			semaphores[utils.WestRight].StateChan <- utils.Red
+			semaphores[utils.SouthRight].StateChan <- utils.Red
+
+			semaphores[utils.WestLeft].StateChan <- utils.Red
+			semaphores[utils.SouthLeft].StateChan <- utils.Red
+
+			semaphores[utils.PedestrianEast].StateChan <- utils.Green
+			semaphores[utils.PedestrianWest].StateChan <- utils.Green
+			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
+			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
+
+			drawer.Input <- &utils.Payload{
+				Time:       t,
+				Semaphores: semaphores,
+			}
+
+			time.Sleep(time.Second * 3)
+			t++
+
+			semaphores[utils.StraightHorizontal].StateChan <- utils.Red
+			semaphores[utils.StraightVertical].StateChan <- utils.Red
+
+			semaphores[utils.WestRight].StateChan <- utils.Green
+			semaphores[utils.SouthRight].StateChan <- utils.Green
+
+			semaphores[utils.WestLeft].StateChan <- utils.Red
+			semaphores[utils.SouthLeft].StateChan <- utils.Red
+
+			semaphores[utils.PedestrianEast].StateChan <- utils.Red
+			semaphores[utils.PedestrianWest].StateChan <- utils.Red
+			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
+			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
+
+			drawer.Input <- &utils.Payload{
+				Time:       t,
+				Semaphores: semaphores,
+			}
+
 		}
-
-		time.Sleep(time.Second * 3)
-		t++
-
-		semaphores[utils.StraightHorizontal].StateChan <- utils.Red
-		semaphores[utils.StraightVertical].StateChan <- utils.Red
-
-		semaphores[utils.WestRight].StateChan <- utils.Red
-		semaphores[utils.SouthRight].StateChan <- utils.Red
-
-		semaphores[utils.WestLeft].StateChan <- utils.Green
-		semaphores[utils.SouthLeft].StateChan <- utils.Green
-
-		semaphores[utils.PedestrianEast].StateChan <- utils.Red
-		semaphores[utils.PedestrianWest].StateChan <- utils.Red
-		semaphores[utils.PedestrianNorth].StateChan <- utils.Red
-		semaphores[utils.PedestrianSouth].StateChan <- utils.Red
-
-		drawer.Input <- &utils.Payload{
-			Time:       t,
-			Semaphores: semaphores,
-		}
-
-		time.Sleep(time.Second * 3)
-		t++
-
-		semaphores[utils.StraightHorizontal].StateChan <- utils.Red
-		semaphores[utils.StraightVertical].StateChan <- utils.Green
-
-		semaphores[utils.WestRight].StateChan <- utils.Red
-		semaphores[utils.SouthRight].StateChan <- utils.Red
-
-		semaphores[utils.WestLeft].StateChan <- utils.Red
-		semaphores[utils.SouthLeft].StateChan <- utils.Red
-
-		semaphores[utils.PedestrianEast].StateChan <- utils.Green
-		semaphores[utils.PedestrianWest].StateChan <- utils.Green
-		semaphores[utils.PedestrianNorth].StateChan <- utils.Red
-		semaphores[utils.PedestrianSouth].StateChan <- utils.Red
-
-		drawer.Input <- &utils.Payload{
-			Time:       t,
-			Semaphores: semaphores,
-		}
-
-		time.Sleep(time.Second * 3)
-		t++
-
-		semaphores[utils.StraightHorizontal].StateChan <- utils.Red
-		semaphores[utils.StraightVertical].StateChan <- utils.Red
-
-		semaphores[utils.WestRight].StateChan <- utils.Green
-		semaphores[utils.SouthRight].StateChan <- utils.Green
-
-		semaphores[utils.WestLeft].StateChan <- utils.Red
-		semaphores[utils.SouthLeft].StateChan <- utils.Red
-
-		semaphores[utils.PedestrianEast].StateChan <- utils.Red
-		semaphores[utils.PedestrianWest].StateChan <- utils.Red
-		semaphores[utils.PedestrianNorth].StateChan <- utils.Red
-		semaphores[utils.PedestrianSouth].StateChan <- utils.Red
-
-		drawer.Input <- &utils.Payload{
-			Time:       t,
-			Semaphores: semaphores,
-		}
-
-		//}
 	}()
 }
 
