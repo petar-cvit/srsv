@@ -41,8 +41,14 @@ func New() {
 
 			semaphores[utils.PedestrianEast].StateChan <- utils.Red
 			semaphores[utils.PedestrianWest].StateChan <- utils.Red
-			semaphores[utils.PedestrianNorth].StateChan <- utils.Green
-			semaphores[utils.PedestrianSouth].StateChan <- utils.Green
+
+			// north pedestrian
+			semaphores[utils.PedestrianNorthLeft].StateChan <- utils.Green
+			semaphores[utils.PedestrianNorthRight].StateChan <- utils.Green
+
+			// south pedestrian
+			semaphores[utils.PedestrianSouthLeft].StateChan <- utils.Green
+			semaphores[utils.PedestrianSouthRight].StateChan <- utils.Green
 
 			time.Sleep(time.Second * 5)
 			t++
@@ -58,8 +64,14 @@ func New() {
 
 			semaphores[utils.PedestrianEast].StateChan <- utils.Red
 			semaphores[utils.PedestrianWest].StateChan <- utils.Red
-			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
-			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
+
+			// north pedestrian
+			semaphores[utils.PedestrianNorthLeft].StateChan <- utils.Red
+			semaphores[utils.PedestrianNorthRight].StateChan <- utils.Red
+
+			// south pedestrian
+			semaphores[utils.PedestrianSouthLeft].StateChan <- utils.Red
+			semaphores[utils.PedestrianSouthRight].StateChan <- utils.Red
 
 			time.Sleep(time.Second * 5)
 			t++
@@ -75,8 +87,14 @@ func New() {
 
 			semaphores[utils.PedestrianEast].StateChan <- utils.Green
 			semaphores[utils.PedestrianWest].StateChan <- utils.Green
-			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
-			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
+
+			// north pedestrian
+			semaphores[utils.PedestrianNorthLeft].StateChan <- utils.Red
+			semaphores[utils.PedestrianNorthRight].StateChan <- utils.Red
+
+			// south pedestrian
+			semaphores[utils.PedestrianSouthLeft].StateChan <- utils.Red
+			semaphores[utils.PedestrianSouthRight].StateChan <- utils.Red
 
 			time.Sleep(time.Second * 5)
 			t++
@@ -92,8 +110,14 @@ func New() {
 
 			semaphores[utils.PedestrianEast].StateChan <- utils.Red
 			semaphores[utils.PedestrianWest].StateChan <- utils.Red
-			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
-			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
+
+			// north pedestrian
+			semaphores[utils.PedestrianNorthLeft].StateChan <- utils.Red
+			semaphores[utils.PedestrianNorthRight].StateChan <- utils.Red
+
+			// south pedestrian
+			semaphores[utils.PedestrianSouthLeft].StateChan <- utils.Red
+			semaphores[utils.PedestrianSouthRight].StateChan <- utils.Red
 		}
 	}()
 }
@@ -109,10 +133,13 @@ func createSemaphores(drawChan chan *utils.SemaphoreMessage) map[string]*semapho
 	semaphores[utils.WestLeft] = semaphore.New(utils.Red, utils.WestLeft, drawChan)
 	semaphores[utils.SouthLeft] = semaphore.New(utils.Red, utils.SouthLeft, drawChan)
 
-	semaphores[utils.PedestrianNorth] = semaphore.New(utils.Red, utils.PedestrianNorth, drawChan)
 	semaphores[utils.PedestrianEast] = semaphore.New(utils.Red, utils.PedestrianEast, drawChan)
 	semaphores[utils.PedestrianWest] = semaphore.New(utils.Red, utils.PedestrianWest, drawChan)
-	semaphores[utils.PedestrianSouth] = semaphore.New(utils.Red, utils.PedestrianSouth, drawChan)
+
+	semaphores[utils.PedestrianNorthLeft] = semaphore.New(utils.Red, utils.PedestrianNorthLeft, drawChan)
+	semaphores[utils.PedestrianNorthRight] = semaphore.New(utils.Red, utils.PedestrianNorthRight, drawChan)
+	semaphores[utils.PedestrianSouthLeft] = semaphore.New(utils.Red, utils.PedestrianSouthLeft, drawChan)
+	semaphores[utils.PedestrianSouthRight] = semaphore.New(utils.Red, utils.PedestrianSouthRight, drawChan)
 
 	return semaphores
 }
@@ -125,8 +152,11 @@ func spinSemaphores(semaphores map[string]*semaphore.Semaphore) {
 	go semaphores[utils.WestLeft].Start()
 	go semaphores[utils.SouthLeft].Start()
 
-	go semaphores[utils.PedestrianNorth].Start()
 	go semaphores[utils.PedestrianEast].Start()
 	go semaphores[utils.PedestrianWest].Start()
-	go semaphores[utils.PedestrianSouth].Start()
+
+	go semaphores[utils.PedestrianNorthRight].Start()
+	go semaphores[utils.PedestrianNorthLeft].Start()
+	go semaphores[utils.PedestrianSouthRight].Start()
+	go semaphores[utils.PedestrianSouthLeft].Start()
 }

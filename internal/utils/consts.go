@@ -24,22 +24,30 @@ const StraightVerticalToNorth = "straightVericalToNorth"
 const StraightVerticalToSouth = "straightVericalToSouth"
 
 // pedestrian Semaphores
-const PedestrianNorth = "pedestrianNorth"
-const PedestrianEast = "pedestrianEast"
+const PedestrianNorthLeft = "pedestrianNorthLeft"
+const PedestrianNorthRight = "pedestrianNorthRight"
+const PedestrianSouthLeft = "pedestrianSouthLeft"
+const PedestrianSouthRight = "pedestrianSouthRight"
+
 const PedestrianWest = "pedestrianWest"
-const PedestrianSouth = "pedestrianSouth"
+const PedestrianEast = "pedestrianEast"
 
 // pedestrian SemaphoresDraw
-const PedestrianNorthDraw = "pedestrianNorthDraw"
 const PedestrianEastDraw = "pedestrianEastDraw"
 const PedestrianWestDraw = "pedestrianWestDraw"
+
+const PedestrianNorthDraw = "pedestrianNorthDraw"
 const PedestrianSouthDraw = "pedestrianSouthDraw"
 
 // pedestrians
 const PedestrianNorthToSouth = "pedestrianNorthToSouth"
-const PedestrianSouthToNorth = "pedestrianSouthTONorth"
-const PedestrianEastToWest = "pedestrianEastToWest"
-const PedestrianWestToEast = "pedestrianWestToEast"
+const PedestrianSouthToNorth = "pedestrianSouthToNorth"
+
+// east-west pedestrians
+const PedestrianEastToWestNorth = "pedestrianEastToWestNorth"
+const PedestrianWestToEastNorth = "pedestrianWestToEastNorth"
+const PedestrianEastToWestSouth = "pedestrianEastToWestSouth"
+const PedestrianWestToEastSouth = "pedestrianWestToEastSouth"
 
 // waiting status
 const NotWaiting = 0

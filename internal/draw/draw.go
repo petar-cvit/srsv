@@ -51,7 +51,8 @@ func (d *Drawer) Start() {
 		case payload := <-d.CrossingChan:
 			fmt.Println("pedestrian crossing", payload.Position, payload.Crossing)
 			d.crossing[payload.Position] = getRune(payload.Crossing, payload.Car)
-			d.waiting[payload.Position] = utils.NotWaiting
+			d.waiting = invalidateWaitingMap(payload, d.waiting)
+
 			d.DrawCrossing()
 		}
 	}
@@ -72,19 +73,21 @@ func (d *Drawer) DrawCrossing() {
 		"   ¦\t|\t\t\t")
 
 	fmt.Println("\t\t   " +
-		drawWaitingPedestrians(utils.PedestrianWestToEast, d.waiting) +
+		drawWaitingPedestrians(utils.PedestrianWestToEastNorth, d.waiting) +
 		"    | " +
 		drawHorizontalCrossing(utils.PedestrianNorthDraw, d.crossing, 19) +
-		"|\t\t\t")
+		"|   " +
+		drawWaitingPedestrians(utils.PedestrianEastToWestNorth, d.waiting) +
+		"    \t\t")
 
 	fmt.Println("\t\t      " +
-		drawSemaphore(d.semaphores[utils.PedestrianNorth]) +
+		drawSemaphore(d.semaphores[utils.PedestrianNorthLeft]) +
 		" |\t¦   " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
 		"   ¦\t|   " +
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
 		"   ¦\t| " +
-		drawSemaphore(d.semaphores[utils.PedestrianNorth]) +
+		drawSemaphore(d.semaphores[utils.PedestrianNorthRight]) +
 		"\t\t\t")
 
 	fmt.Println("\t\t\t|\t¦   " +
@@ -199,24 +202,43 @@ func (d *Drawer) DrawCrossing() {
 		"   ¦\t|\t\t\t")
 
 	fmt.Println("\t\t      " +
-		drawSemaphore(d.semaphores[utils.PedestrianSouth]) +
+		drawSemaphore(d.semaphores[utils.PedestrianSouthLeft]) +
 		" |\t¦   " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
 		"   |\t¦   " +
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
 		"   ¦\t| " +
-		drawSemaphore(d.semaphores[utils.PedestrianSouth]) +
+		drawSemaphore(d.semaphores[utils.PedestrianSouthRight]) +
 		"\t\t\t")
 
-	fmt.Println("\t\t\t| " +
-		drawHorizontalCrossing(utils.PedestrianSouth, d.crossing, 19) +
-		"|\t\t\t")
+	fmt.Println("\t\t\t|\t¦   " +
+		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
+		"   |\t¦   " +
+		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
+		"   ¦\t| \t\t\t")
+
+	fmt.Println("\t\t   " +
+		drawWaitingPedestrians(utils.PedestrianWestToEastSouth, d.waiting) +
+		"    | " +
+		drawHorizontalCrossing(utils.PedestrianSouthDraw, d.crossing, 19) +
+		"|   " +
+		drawWaitingPedestrians(utils.PedestrianEastToWestSouth, d.waiting) +
+		"    \t\t")
 
 	fmt.Println("\t\t\t|\t¦   " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
 		"   |\t¦   " +
 		drawWaitingCombined(utils.StraightVerticalToNorth, d.waiting, d.crossing) +
 		"   ¦\t|\t\t\t")
+
+	for k, v := range d.crossing {
+		fmt.Println(k, v)
+	}
+
+	fmt.Println()
+	for k, v := range d.waiting {
+		fmt.Println(k, v)
+	}
 }
 
 func drawSemaphore(sem int) string {
@@ -244,7 +266,7 @@ func drawSingleVertical(key string, crossing map[string]string) string {
 }
 
 func drawWaitingPedestrians(key string, waiting map[string]int) string {
-	if _, exists := waiting[key]; exists {
+	if val, exists := waiting[key]; exists && val == utils.Waiting {
 		return color.Ize(color.Blue, "p")
 	}
 
@@ -267,16 +289,18 @@ func drawWaitingCombined(key string, waiting map[string]int, crossing map[string
 
 func createDrawableSemaphors() map[string]int {
 	return map[string]int{
-		utils.StraightHorizontal: 0,
-		utils.StraightVertical:   0,
-		utils.WestRight:          0,
-		utils.SouthRight:         0,
-		utils.WestLeft:           0,
-		utils.SouthLeft:          0,
-		utils.PedestrianNorth:    0,
-		utils.PedestrianEast:     0,
-		utils.PedestrianWest:     0,
-		utils.PedestrianSouth:    0,
+		utils.StraightHorizontal:   0,
+		utils.StraightVertical:     0,
+		utils.WestRight:            0,
+		utils.SouthRight:           0,
+		utils.WestLeft:             0,
+		utils.SouthLeft:            0,
+		utils.PedestrianEast:       0,
+		utils.PedestrianWest:       0,
+		utils.PedestrianNorthLeft:  0,
+		utils.PedestrianNorthRight: 0,
+		utils.PedestrianSouthLeft:  0,
+		utils.PedestrianSouthRight: 0,
 	}
 }
 
@@ -286,7 +310,26 @@ func createWaiting() map[string]int {
 		utils.StraightHorizontalToEast: 0,
 		utils.StraightVerticalToNorth:  0,
 		utils.StraightVerticalToSouth:  0,
+
+		utils.PedestrianEastToWestNorth: 0,
+		utils.PedestrianWestToEastNorth: 0,
+		utils.PedestrianEastToWestSouth: 0,
+		utils.PedestrianWestToEastSouth: 0,
 	}
+}
+
+func invalidateWaitingMap(payload *utils.CrossingMessage, waiting map[string]int) map[string]int {
+	if payload.Position == utils.PedestrianNorthDraw {
+		waiting[utils.PedestrianEastToWestNorth] = utils.NotWaiting
+		waiting[utils.PedestrianWestToEastNorth] = utils.NotWaiting
+	}
+
+	if payload.Position == utils.PedestrianSouthDraw {
+		waiting[utils.PedestrianEastToWestSouth] = utils.NotWaiting
+		waiting[utils.PedestrianWestToEastSouth] = utils.NotWaiting
+	}
+
+	return waiting
 }
 
 func getRune(crossing bool, car bool) string {

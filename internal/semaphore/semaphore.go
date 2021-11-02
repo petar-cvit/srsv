@@ -32,12 +32,6 @@ func (s *Semaphore) Start() {
 					State:    next,
 				}
 				s.OutputChan <- s.Current
-
-				s.drawChan <- &utils.SemaphoreMessage{
-					Position: s.position,
-					State:    next,
-				}
-				s.OutputChan <- s.Current
 			}()
 		}
 	}

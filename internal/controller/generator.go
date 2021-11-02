@@ -1,11 +1,12 @@
 package controller
 
 import (
+	"time"
+
 	"lab2/internal/actors"
 	"lab2/internal/logger"
 	"lab2/internal/semaphore"
 	"lab2/internal/utils"
-	"time"
 )
 
 type Generator struct {
@@ -33,12 +34,63 @@ func (g *Generator) Start() {
 			time.Sleep(time.Second * 15)
 
 			pedestrian := actors.NewPedestrian(
-				utils.PedestrianWestToEast,
+				utils.PedestrianWestToEastNorth,
 				g.register,
-				g.semaphores[utils.PedestrianNorth].OutputChan,
+				g.semaphores[utils.PedestrianNorthLeft].OutputChan,
 				g.draw,
 				g.crossingChan,
 				utils.PedestrianNorthDraw,
+				logger,
+			)
+			pedestrian.StartPedestrian()
+		}
+	}()
+
+	go func() {
+		for {
+			time.Sleep(time.Second * 12)
+
+			pedestrian := actors.NewPedestrian(
+				utils.PedestrianEastToWestNorth,
+				g.register,
+				g.semaphores[utils.PedestrianNorthRight].OutputChan,
+				g.draw,
+				g.crossingChan,
+				utils.PedestrianNorthDraw,
+				logger,
+			)
+			pedestrian.StartPedestrian()
+		}
+	}()
+
+	go func() {
+		for {
+			time.Sleep(time.Second * 18)
+
+			pedestrian := actors.NewPedestrian(
+				utils.PedestrianWestToEastSouth,
+				g.register,
+				g.semaphores[utils.PedestrianSouthLeft].OutputChan,
+				g.draw,
+				g.crossingChan,
+				utils.PedestrianSouthDraw,
+				logger,
+			)
+			pedestrian.StartPedestrian()
+		}
+	}()
+
+	go func() {
+		for {
+			time.Sleep(time.Second * 21)
+
+			pedestrian := actors.NewPedestrian(
+				utils.PedestrianEastToWestSouth,
+				g.register,
+				g.semaphores[utils.PedestrianSouthRight].OutputChan,
+				g.draw,
+				g.crossingChan,
+				utils.PedestrianSouthDraw,
 				logger,
 			)
 			pedestrian.StartPedestrian()
@@ -59,7 +111,7 @@ func (g *Generator) Start() {
 	//		car.StartCar()
 	//	}
 	//}()
-	//
+
 	//go func() {
 	//	for {
 	//		time.Sleep(time.Second * 10)

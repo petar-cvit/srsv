@@ -3,6 +3,7 @@ package actors
 import (
 	"lab2/internal/logger"
 	"lab2/internal/utils"
+	"time"
 )
 
 type Pedestrian struct {
@@ -49,6 +50,7 @@ func (p *Pedestrian) StartPedestrian() {
 					select {
 					case state := <-p.semaphore:
 						if state == utils.Red {
+							time.Sleep(time.Millisecond * 30)
 							p.crossingChan <- &utils.CrossingMessage{
 								Position: p.semaphoreLocation,
 								Crossing: false,
