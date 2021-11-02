@@ -27,7 +27,7 @@ func New() {
 		t := 0
 
 		for {
-			time.Sleep(time.Second * 3)
+			time.Sleep(time.Second * 5)
 			t++
 
 			semaphores[utils.StraightHorizontal].StateChan <- utils.Green
@@ -44,7 +44,7 @@ func New() {
 			semaphores[utils.PedestrianNorth].StateChan <- utils.Green
 			semaphores[utils.PedestrianSouth].StateChan <- utils.Green
 
-			time.Sleep(time.Second * 3)
+			time.Sleep(time.Second * 5)
 			t++
 
 			semaphores[utils.StraightHorizontal].StateChan <- utils.Red
@@ -61,7 +61,7 @@ func New() {
 			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
 
-			time.Sleep(time.Second * 3)
+			time.Sleep(time.Second * 5)
 			t++
 
 			semaphores[utils.StraightHorizontal].StateChan <- utils.Red
@@ -78,7 +78,7 @@ func New() {
 			semaphores[utils.PedestrianNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianSouth].StateChan <- utils.Red
 
-			time.Sleep(time.Second * 3)
+			time.Sleep(time.Second * 5)
 			t++
 
 			semaphores[utils.StraightHorizontal].StateChan <- utils.Red

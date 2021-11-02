@@ -12,7 +12,7 @@ type Car struct {
 	draw         chan string
 }
 
-func New(position string, register chan string, semaphore chan int,
+func NewCar(position string, register chan string, semaphore chan int,
 	draw chan string, crossingChan chan *utils.CrossingMessage) *Car {
 	return &Car{
 		Position:     position,
@@ -23,7 +23,7 @@ func New(position string, register chan string, semaphore chan int,
 	}
 }
 
-func (c *Car) Start() {
+func (c *Car) StartCar() {
 	c.draw <- c.Position
 
 	go func() {
@@ -38,6 +38,7 @@ func (c *Car) Start() {
 					c.crossingChan <- &utils.CrossingMessage{
 						Position: c.Position,
 						Crossing: true,
+						Car:      true,
 					}
 				}()
 
@@ -48,6 +49,7 @@ func (c *Car) Start() {
 							c.crossingChan <- &utils.CrossingMessage{
 								Position: c.Position,
 								Crossing: false,
+								Car:      true,
 							}
 
 							return

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"lab2/internal/actors"
+	"lab2/internal/logger"
 	"lab2/internal/semaphore"
 	"lab2/internal/utils"
 	"time"
@@ -25,70 +26,82 @@ func NewGenerator(register chan string, semaphores map[string]*semaphore.Semapho
 }
 
 func (g *Generator) Start() {
+	logger := logger.New()
+
 	go func() {
 		for {
 			time.Sleep(time.Second * 15)
 
-			car := actors.New(
-				utils.StraightVerticalToNorth,
+			pedestrian := actors.NewPedestrian(
+				utils.PedestrianWestToEast,
 				g.register,
-				g.semaphores[utils.StraightVertical].OutputChan,
+				g.semaphores[utils.PedestrianNorth].OutputChan,
 				g.draw,
 				g.crossingChan,
+				utils.PedestrianNorthDraw,
+				logger,
 			)
-			car.Start()
-		}
-	}()
-
-	go func() {
-		for {
-			time.Sleep(time.Second * 10)
-
-			car := actors.New(
-				utils.StraightVerticalToSouth,
-				g.register,
-				g.semaphores[utils.StraightVertical].OutputChan,
-				g.draw,
-				g.crossingChan,
-			)
-			car.Start()
-		}
-	}()
-
-	go func() {
-		for {
-			time.Sleep(time.Second * 5)
-
-			car := actors.New(
-				utils.StraightHorizontalToWest,
-				g.register,
-				g.semaphores[utils.StraightHorizontal].OutputChan,
-				g.draw,
-				g.crossingChan,
-			)
-			car.Start()
-		}
-	}()
-
-	go func() {
-		for {
-			time.Sleep(time.Second * 10)
-
-			car := actors.New(
-				utils.StraightHorizontalToEast,
-				g.register,
-				g.semaphores[utils.StraightHorizontal].OutputChan,
-				g.draw,
-				g.crossingChan,
-			)
-			car.Start()
+			pedestrian.StartPedestrian()
 		}
 	}()
 
 	//go func() {
-	//	time.Sleep(time.Second * 5)
+	//	for {
+	//		time.Sleep(time.Second * 15)
 	//
-	//	car := actors.New(utils.StraightVerticalToSouth, g.register, g.semaphore, g.draw)
-	//	car.Start()
+	//		car := actors.NewCar(
+	//			utils.StraightVerticalToNorth,
+	//			g.register,
+	//			g.semaphores[utils.StraightVertical].OutputChan,
+	//			g.draw,
+	//			g.crossingChan,
+	//		)
+	//		car.StartCar()
+	//	}
+	//}()
+	//
+	//go func() {
+	//	for {
+	//		time.Sleep(time.Second * 10)
+	//
+	//		car := actors.NewCar(
+	//			utils.StraightVerticalToSouth,
+	//			g.register,
+	//			g.semaphores[utils.StraightVertical].OutputChan,
+	//			g.draw,
+	//			g.crossingChan,
+	//		)
+	//		car.StartCar()
+	//	}
+	//}()
+	//
+	//go func() {
+	//	for {
+	//		time.Sleep(time.Second * 5)
+	//
+	//		car := actors.NewCar(
+	//			utils.StraightHorizontalToWest,
+	//			g.register,
+	//			g.semaphores[utils.StraightHorizontal].OutputChan,
+	//			g.draw,
+	//			g.crossingChan,
+	//		)
+	//		car.StartCar()
+	//	}
+	//}()
+	//
+	//go func() {
+	//	for {
+	//		time.Sleep(time.Second * 10)
+	//
+	//		car := actors.NewCar(
+	//			utils.StraightHorizontalToEast,
+	//			g.register,
+	//			g.semaphores[utils.StraightHorizontal].OutputChan,
+	//			g.draw,
+	//			g.crossingChan,
+	//		)
+	//		car.StartCar()
+	//	}
 	//}()
 }

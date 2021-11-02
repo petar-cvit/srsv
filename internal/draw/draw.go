@@ -2,6 +2,7 @@ package draw
 
 import (
 	"fmt"
+	"lab2/internal/logger"
 	"os"
 	"os/exec"
 	"strings"
@@ -20,16 +21,19 @@ type Drawer struct {
 	crossing   map[string]string
 	semaphores map[string]int
 	waiting    map[string]int
+	logger     *logger.Logger
 }
 
 func New() *Drawer {
+	crossing := make(map[string]string)
+
 	return &Drawer{
 		SemaphoreChan: make(chan *utils.SemaphoreMessage),
 		WaitingChan:   make(chan string),
 		CrossingChan:  make(chan *utils.CrossingMessage),
 		semaphores:    createDrawableSemaphors(),
 		waiting:       createWaiting(),
-		crossing:      map[string]string{},
+		crossing:      crossing,
 	}
 }
 
@@ -41,13 +45,12 @@ func (d *Drawer) Start() {
 			d.DrawCrossing()
 			break
 		case payload := <-d.WaitingChan:
-			fmt.Println("car waiting", payload)
 			d.waiting[payload] = utils.Waiting
 			d.DrawCrossing()
 			break
 		case payload := <-d.CrossingChan:
-			fmt.Println("car crossing", payload.Position, payload.Crossing)
-			d.crossing[payload.Position] = getRune(payload.Crossing)
+			fmt.Println("pedestrian crossing", payload.Position, payload.Crossing)
+			d.crossing[payload.Position] = getRune(payload.Crossing, payload.Car)
 			d.waiting[payload.Position] = utils.NotWaiting
 			d.DrawCrossing()
 		}
@@ -68,11 +71,11 @@ func (d *Drawer) DrawCrossing() {
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
 		"   ¦\t|\t\t\t")
 
-	fmt.Println("\t\t\t|\t¦   " +
-		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
-		"   ¦\t|   " +
-		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
-		"   ¦\t|\t\t\t")
+	fmt.Println("\t\t   " +
+		drawWaitingPedestrians(utils.PedestrianWestToEast, d.waiting) +
+		"    | " +
+		drawHorizontalCrossing(utils.PedestrianNorthDraw, d.crossing, 19) +
+		"|\t\t\t")
 
 	fmt.Println("\t\t      " +
 		drawSemaphore(d.semaphores[utils.PedestrianNorth]) +
@@ -205,11 +208,9 @@ func (d *Drawer) DrawCrossing() {
 		drawSemaphore(d.semaphores[utils.PedestrianSouth]) +
 		"\t\t\t")
 
-	fmt.Println("\t\t\t|\t¦   " +
-		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
-		"   |\t¦   " +
-		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
-		"   ¦\t|\t\t\t")
+	fmt.Println("\t\t\t| " +
+		drawHorizontalCrossing(utils.PedestrianSouth, d.crossing, 19) +
+		"|\t\t\t")
 
 	fmt.Println("\t\t\t|\t¦   " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
@@ -237,6 +238,14 @@ func drawHorizontalCrossing(key string, crossing map[string]string, times int) s
 func drawSingleVertical(key string, crossing map[string]string) string {
 	if val, exists := crossing[key]; exists {
 		return val
+	}
+
+	return " "
+}
+
+func drawWaitingPedestrians(key string, waiting map[string]int) string {
+	if _, exists := waiting[key]; exists {
+		return color.Ize(color.Blue, "p")
 	}
 
 	return " "
@@ -280,9 +289,13 @@ func createWaiting() map[string]int {
 	}
 }
 
-func getRune(crossing bool) string {
+func getRune(crossing bool, car bool) string {
 	if crossing {
-		return color.Ize(color.Yellow, "A")
+		if car {
+			return color.Ize(color.Yellow, "A")
+		}
+
+		return color.Ize(color.Blue, "p")
 	}
 
 	return " "

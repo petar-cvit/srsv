@@ -8,4 +8,5 @@ type SemaphoreMessage struct {
 type CrossingMessage struct {
 	Position string
 	Crossing bool
+	Car      bool
 }
