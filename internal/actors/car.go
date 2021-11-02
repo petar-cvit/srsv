@@ -1,38 +1,59 @@
 package actors
 
 import (
-	"fmt"
-
 	"lab2/internal/utils"
 )
 
 type Car struct {
-	Position  string
-	register  chan string
-	semaphore chan string
-	draw      chan string
+	Position     string
+	register     chan string
+	semaphore    chan int
+	crossingChan chan *utils.CrossingMessage
+	draw         chan string
 }
 
-func New(position string, register chan string, semaphore chan string, draw chan string) *Car {
+func New(position string, register chan string, semaphore chan int,
+	draw chan string, crossingChan chan *utils.CrossingMessage) *Car {
 	return &Car{
-		Position:  position,
-		register:  register,
-		semaphore: semaphore,
-		draw:      draw,
+		Position:     position,
+		register:     register,
+		semaphore:    semaphore,
+		crossingChan: crossingChan,
+		draw:         draw,
 	}
 }
 
 func (c *Car) Start() {
 	c.draw <- c.Position
 
-	fmt.Println("started car")
-
 	go func() {
 		for {
 			select {
-			case <-c.semaphore:
-				c.draw <- utils.CarMessage(c.Position)
-				return
+			case semaphoreState := <-c.semaphore:
+				if semaphoreState != utils.Green {
+					continue
+				}
+
+				go func() {
+					c.crossingChan <- &utils.CrossingMessage{
+						Position: c.Position,
+						Crossing: true,
+					}
+				}()
+
+				for {
+					select {
+					case state := <-c.semaphore:
+						if state == utils.Red {
+							c.crossingChan <- &utils.CrossingMessage{
+								Position: c.Position,
+								Crossing: false,
+							}
+
+							return
+						}
+					}
+				}
 			}
 		}
 	}()
