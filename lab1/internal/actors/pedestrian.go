@@ -1,8 +1,7 @@
 package actors
 
 import (
-	"lab2/internal/logger"
-	"lab2/internal/utils"
+	"github.com/petar-cvit/srsv.lab1/internal/utils"
 )
 
 type Pedestrian struct {
@@ -12,11 +11,10 @@ type Pedestrian struct {
 	semaphoreLocation string
 	crossingChan      chan *utils.CrossingMessage
 	draw              chan string
-	logger            *logger.Logger
 }
 
 func NewPedestrian(position string, register chan string, semaphore chan int,
-	draw chan string, crossingChan chan *utils.CrossingMessage, semaphoreLocation string, logger *logger.Logger) *Pedestrian {
+	draw chan string, crossingChan chan *utils.CrossingMessage, semaphoreLocation string) *Pedestrian {
 	return &Pedestrian{
 		Position:          position,
 		register:          register,
@@ -24,7 +22,6 @@ func NewPedestrian(position string, register chan string, semaphore chan int,
 		semaphoreLocation: semaphoreLocation,
 		crossingChan:      crossingChan,
 		draw:              draw,
-		logger:            logger,
 	}
 }
 

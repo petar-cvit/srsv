@@ -2,14 +2,13 @@ package draw
 
 import (
 	"fmt"
-	"lab2/internal/logger"
 	"os"
 	"os/exec"
 	"strings"
 
 	"github.com/TwiN/go-color"
 
-	"lab2/internal/utils"
+	"github.com/petar-cvit/srsv.lab1/internal/utils"
 )
 
 type Drawer struct {
@@ -21,7 +20,6 @@ type Drawer struct {
 	crossing   map[string]string
 	semaphores map[string]int
 	waiting    map[string]int
-	logger     *logger.Logger
 }
 
 func New() *Drawer {

@@ -1,4 +1,4 @@
-module lab2
+module github.com/petar-cvit/srsv.lab1
 
 go 1.16
 

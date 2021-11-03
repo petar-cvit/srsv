@@ -3,10 +3,9 @@ package controller
 import (
 	"time"
 
-	"lab2/internal/actors"
-	"lab2/internal/logger"
-	"lab2/internal/semaphore"
-	"lab2/internal/utils"
+	"github.com/petar-cvit/srsv.lab1/internal/actors"
+	"github.com/petar-cvit/srsv.lab1/internal/semaphore"
+	"github.com/petar-cvit/srsv.lab1/internal/utils"
 )
 
 type Generator struct {
@@ -27,8 +26,6 @@ func NewGenerator(register chan string, semaphores map[string]*semaphore.Semapho
 }
 
 func (g *Generator) Start() {
-	logger := logger.New()
-
 	go func() {
 		time.Sleep(10)
 
@@ -42,7 +39,6 @@ func (g *Generator) Start() {
 				g.draw,
 				g.crossingChan,
 				utils.PedestrianNorthDraw,
-				logger,
 			)
 			pedestrian.StartPedestrian()
 		}
@@ -61,7 +57,6 @@ func (g *Generator) Start() {
 				g.draw,
 				g.crossingChan,
 				utils.PedestrianNorthDraw,
-				logger,
 			)
 			pedestrian.StartPedestrian()
 		}
@@ -80,7 +75,6 @@ func (g *Generator) Start() {
 				g.draw,
 				g.crossingChan,
 				utils.PedestrianSouthDraw,
-				logger,
 			)
 			pedestrian.StartPedestrian()
 		}
@@ -99,7 +93,6 @@ func (g *Generator) Start() {
 				g.draw,
 				g.crossingChan,
 				utils.PedestrianSouthDraw,
-				logger,
 			)
 			pedestrian.StartPedestrian()
 		}
@@ -116,7 +109,6 @@ func (g *Generator) Start() {
 				g.draw,
 				g.crossingChan,
 				utils.PedestrianEastDraw,
-				logger,
 			)
 			pedestrian.StartPedestrian()
 		}
@@ -135,7 +127,6 @@ func (g *Generator) Start() {
 				g.draw,
 				g.crossingChan,
 				utils.PedestrianWestDraw,
-				logger,
 			)
 			pedestrian.StartPedestrian()
 		}
@@ -152,7 +143,6 @@ func (g *Generator) Start() {
 				g.draw,
 				g.crossingChan,
 				utils.PedestrianEastDraw,
-				logger,
 			)
 			pedestrian.StartPedestrian()
 		}
@@ -171,7 +161,6 @@ func (g *Generator) Start() {
 				g.draw,
 				g.crossingChan,
 				utils.PedestrianWestDraw,
-				logger,
 			)
 			pedestrian.StartPedestrian()
 		}

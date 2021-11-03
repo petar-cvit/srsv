@@ -1,6 +1,6 @@
 package semaphore
 
-import "lab2/internal/utils"
+import "github.com/petar-cvit/srsv.lab1/internal/utils"
 
 type Semaphore struct {
 	Current    int
