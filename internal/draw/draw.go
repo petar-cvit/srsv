@@ -96,14 +96,15 @@ func (d *Drawer) DrawCrossing() {
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
 		"   ¦\t|\t\t\t")
 
-	fmt.Println("\t\t  " +
-		drawSemaphore(d.semaphores[utils.PedestrianWest]) +
+	fmt.Println("\t     " +
+		drawWaitingPedestrians(utils.PedestrianNorthToSouthEast, d.waiting) + "    " +
+		drawSemaphore(d.semaphores[utils.PedestrianWestNorth]) +
 		"     |   " + drawSemaphore(d.semaphores[utils.SouthLeft]) + "   " +
 		"¦   " + drawSemaphore(d.semaphores[utils.StraightVertical]) + "   " +
 		"¦   " + drawSemaphore(d.semaphores[utils.SouthRight]) + "   " +
 		"|   " + drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) + "   ¦\t|     " +
-		drawSemaphore(d.semaphores[utils.PedestrianEast]) +
-		" \t\t\t",
+		drawSemaphore(d.semaphores[utils.PedestrianEastNorth]) + "     " +
+		drawWaitingPedestrians(utils.PedestrianNorthToSouthWest, d.waiting) + "   " + "\t\t",
 	)
 
 	fmt.Println("------------------------" +
@@ -113,19 +114,24 @@ func (d *Drawer) DrawCrossing() {
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
 		"    \t " +
 		"------------------------")
-	fmt.Println("\t\t\t\t    " +
+	fmt.Println("\t     " +
+		drawSingleVertical(utils.PedestrianEastDraw, d.crossing) + "\t\t\t    " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
-		"\t\t    " +
+		"\t\t" +
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
 		"\t\t " +
-		drawSemaphore(d.semaphores[utils.WestRight]))
-	fmt.Println("- - - - - - - - - - - - " +
+		drawSemaphore(d.semaphores[utils.WestRight]) + "         " +
+		drawSingleVertical(utils.PedestrianEastDraw, d.crossing))
+	fmt.Println("- - - - - - -" +
+		drawSingleVertical(utils.PedestrianEastDraw, d.crossing) +
+		" - - - - - " +
 		"  \t    " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
 		"    \t    " +
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
 		"    \t " +
-		"- - - - - - - - - - - - ")
+		"- - - - - " +
+		drawSingleVertical(utils.PedestrianWestDraw, d.crossing) + " - - - - - - ")
 
 	fmt.Println(drawHorizontalCrossing(utils.StraightHorizontalToWest, d.crossing, 32) + " " +
 		drawSemaphore(d.semaphores[utils.StraightHorizontal]) +
@@ -138,19 +144,24 @@ func (d *Drawer) DrawCrossing() {
 		"    \t    " +
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
 		"    \t " +
-		"- - - - - - - - - - - - ")
+		"- - - - - " +
+		drawSingleVertical(utils.PedestrianWestDraw, d.crossing) + " - - - - - - ")
 
-	fmt.Println("\t\t       " +
+	fmt.Println("\t     " +
+		drawSingleVertical(utils.PedestrianEastDraw, d.crossing) + "         " +
 		drawSemaphore(d.semaphores[utils.WestLeft]) +
 		"  \t    " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
 		"    \t    " +
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
 		"    \t " +
-		drawSemaphore(d.semaphores[utils.WestLeft]),
+		drawSemaphore(d.semaphores[utils.WestLeft]) + "         " +
+		drawSingleVertical(utils.PedestrianEastDraw, d.crossing),
 	)
 
-	fmt.Println("- - - - - - - - - - - -" +
+	fmt.Println("- - - - - - -" +
+		drawSingleVertical(utils.PedestrianEastDraw, d.crossing) +
+		" - - - - - " +
 		"  \t    " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
 		"    \t    " +
@@ -163,19 +174,25 @@ func (d *Drawer) DrawCrossing() {
 		drawSemaphore(d.semaphores[utils.StraightHorizontal]) + " " +
 		drawHorizontalCrossing(utils.StraightHorizontalToEast, d.crossing, 32))
 
-	fmt.Println("- - - - - - - - - - - - " +
+	fmt.Println("- - - - - - -" +
+		drawSingleVertical(utils.PedestrianEastDraw, d.crossing) +
+		" - - - - - " +
 		"  \t    " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
 		"    \t    " +
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
 		"    \t " +
-		"- - - - - - - - - - - - ")
-	fmt.Println("\t\t       " + drawSemaphore(d.semaphores[utils.WestRight]) +
+		"- - - - - " +
+		drawSingleVertical(utils.PedestrianWestDraw, d.crossing) + " - - - - - - ")
+	fmt.Println("\t     " +
+		drawSingleVertical(utils.PedestrianEastDraw, d.crossing) + "         " +
+		drawSemaphore(d.semaphores[utils.WestRight]) +
 		"  \t    " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
 		"    \t    " +
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
-		"    \t ")
+		"\t\t - - - - - " +
+		drawSingleVertical(utils.PedestrianWestDraw, d.crossing) + " - - - - - - ")
 	fmt.Println("------------------------" +
 		"  \t    " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
@@ -184,15 +201,16 @@ func (d *Drawer) DrawCrossing() {
 		"    \t " +
 		"------------------------")
 
-	fmt.Println("\t\t  " +
-		drawSemaphore(d.semaphores[utils.PedestrianWest]) + "     |\t¦   " +
+	fmt.Println("\t     " +
+		drawWaitingPedestrians(utils.PedestrianSouthToNorthWest, d.waiting) + "    " +
+		drawSemaphore(d.semaphores[utils.PedestrianWestSouth]) + "     |\t¦   " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
 		"   |   " + drawSemaphore(d.semaphores[utils.SouthRight]) + "   " +
 		"¦   " + drawSemaphore(d.semaphores[utils.StraightVertical]) + "   " +
 		"¦   " + drawSemaphore(d.semaphores[utils.SouthLeft]) + "   " +
 		"|     " +
-		drawSemaphore(d.semaphores[utils.PedestrianEast]) +
-		" \t\t\t",
+		drawSemaphore(d.semaphores[utils.PedestrianEastSouth]) + "     " +
+		drawWaitingPedestrians(utils.PedestrianSouthToNorthEast, d.waiting) + "   " + "\t\t",
 	)
 
 	fmt.Println("\t\t\t|\t¦   " +
@@ -295,12 +313,14 @@ func createDrawableSemaphors() map[string]int {
 		utils.SouthRight:           0,
 		utils.WestLeft:             0,
 		utils.SouthLeft:            0,
-		utils.PedestrianEast:       0,
-		utils.PedestrianWest:       0,
 		utils.PedestrianNorthLeft:  0,
 		utils.PedestrianNorthRight: 0,
 		utils.PedestrianSouthLeft:  0,
 		utils.PedestrianSouthRight: 0,
+		utils.PedestrianEastNorth:  0,
+		utils.PedestrianEastSouth:  0,
+		utils.PedestrianWestNorth:  0,
+		utils.PedestrianWestSouth:  0,
 	}
 }
 

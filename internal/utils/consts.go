@@ -29,8 +29,10 @@ const PedestrianNorthRight = "pedestrianNorthRight"
 const PedestrianSouthLeft = "pedestrianSouthLeft"
 const PedestrianSouthRight = "pedestrianSouthRight"
 
-const PedestrianWest = "pedestrianWest"
-const PedestrianEast = "pedestrianEast"
+const PedestrianWestNorth = "pedestrianWestNorth"
+const PedestrianWestSouth = "pedestrianWestSouth"
+const PedestrianEastNorth = "pedestrianEastNorth"
+const PedestrianEastSouth = "pedestrianEastSouth"
 
 // pedestrian SemaphoresDraw
 const PedestrianEastDraw = "pedestrianEastDraw"
@@ -39,9 +41,11 @@ const PedestrianWestDraw = "pedestrianWestDraw"
 const PedestrianNorthDraw = "pedestrianNorthDraw"
 const PedestrianSouthDraw = "pedestrianSouthDraw"
 
-// pedestrians
-const PedestrianNorthToSouth = "pedestrianNorthToSouth"
-const PedestrianSouthToNorth = "pedestrianSouthToNorth"
+// north-south pedestrians
+const PedestrianNorthToSouthEast = "pedestrianNorthToSouthEast"
+const PedestrianNorthToSouthWest = "pedestrianNorthToSouthWest"
+const PedestrianSouthToNorthEast = "pedestrianSouthToNorthEast"
+const PedestrianSouthToNorthWest = "pedestrianSouthToNorthWest"
 
 // east-west pedestrians
 const PedestrianEastToWestNorth = "pedestrianEastToWestNorth"
