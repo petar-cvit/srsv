@@ -27,11 +27,12 @@ func New() {
 		t := 0
 
 		for {
-			time.Sleep(time.Second * 5)
 			t++
 
-			semaphores[utils.StraightHorizontal].StateChan <- utils.Green
-			semaphores[utils.StraightVertical].StateChan <- utils.Red
+			semaphores[utils.StraightVerticalToSouth].StateChan <- utils.Red
+			semaphores[utils.StraightVerticalToNorth].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontalToEast].StateChan <- utils.Green
+			semaphores[utils.StraightHorizontalToWest].StateChan <- utils.Green
 
 			semaphores[utils.WestRight].StateChan <- utils.Red
 			semaphores[utils.SouthRight].StateChan <- utils.Red
@@ -55,11 +56,13 @@ func New() {
 			semaphores[utils.PedestrianWestNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianWestSouth].StateChan <- utils.Red
 
-			time.Sleep(time.Second * 5)
+			time.Sleep(time.Second * 10)
 			t++
 
-			semaphores[utils.StraightHorizontal].StateChan <- utils.Red
-			semaphores[utils.StraightVertical].StateChan <- utils.Red
+			semaphores[utils.StraightVerticalToSouth].StateChan <- utils.Red
+			semaphores[utils.StraightVerticalToNorth].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontalToEast].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontalToWest].StateChan <- utils.Red
 
 			semaphores[utils.WestRight].StateChan <- utils.Red
 			semaphores[utils.SouthRight].StateChan <- utils.Red
@@ -83,11 +86,13 @@ func New() {
 			semaphores[utils.PedestrianWestNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianWestSouth].StateChan <- utils.Red
 
-			time.Sleep(time.Second * 5)
+			time.Sleep(time.Second * 10)
 			t++
 
-			semaphores[utils.StraightHorizontal].StateChan <- utils.Red
-			semaphores[utils.StraightVertical].StateChan <- utils.Green
+			semaphores[utils.StraightVerticalToSouth].StateChan <- utils.Green
+			semaphores[utils.StraightVerticalToNorth].StateChan <- utils.Green
+			semaphores[utils.StraightHorizontalToEast].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontalToWest].StateChan <- utils.Red
 
 			semaphores[utils.WestRight].StateChan <- utils.Red
 			semaphores[utils.SouthRight].StateChan <- utils.Red
@@ -111,11 +116,13 @@ func New() {
 			semaphores[utils.PedestrianWestNorth].StateChan <- utils.Green
 			semaphores[utils.PedestrianWestSouth].StateChan <- utils.Green
 
-			time.Sleep(time.Second * 5)
+			time.Sleep(time.Second * 10)
 			t++
 
-			semaphores[utils.StraightHorizontal].StateChan <- utils.Red
-			semaphores[utils.StraightVertical].StateChan <- utils.Red
+			semaphores[utils.StraightVerticalToSouth].StateChan <- utils.Red
+			semaphores[utils.StraightVerticalToNorth].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontalToEast].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontalToWest].StateChan <- utils.Red
 
 			semaphores[utils.WestRight].StateChan <- utils.Green
 			semaphores[utils.SouthRight].StateChan <- utils.Green
@@ -138,14 +145,19 @@ func New() {
 			// west pedestrians
 			semaphores[utils.PedestrianWestNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianWestSouth].StateChan <- utils.Red
+
+			time.Sleep(time.Second * 10)
 		}
 	}()
 }
 
 func createSemaphores(drawChan chan *utils.SemaphoreMessage) map[string]*semaphore.Semaphore {
 	semaphores := make(map[string]*semaphore.Semaphore)
-	semaphores[utils.StraightHorizontal] = semaphore.New(utils.Red, utils.StraightHorizontal, drawChan)
-	semaphores[utils.StraightVertical] = semaphore.New(utils.Red, utils.StraightVertical, drawChan)
+	semaphores[utils.StraightVerticalToNorth] = semaphore.New(utils.Red, utils.StraightVerticalToNorth, drawChan)
+	semaphores[utils.StraightVerticalToSouth] = semaphore.New(utils.Red, utils.StraightVerticalToSouth, drawChan)
+
+	semaphores[utils.StraightHorizontalToWest] = semaphore.New(utils.Red, utils.StraightHorizontalToWest, drawChan)
+	semaphores[utils.StraightHorizontalToEast] = semaphore.New(utils.Red, utils.StraightHorizontalToEast, drawChan)
 
 	semaphores[utils.WestRight] = semaphore.New(utils.Red, utils.WestRight, drawChan)
 	semaphores[utils.SouthRight] = semaphore.New(utils.Red, utils.SouthRight, drawChan)
@@ -167,8 +179,11 @@ func createSemaphores(drawChan chan *utils.SemaphoreMessage) map[string]*semapho
 }
 
 func spinSemaphores(semaphores map[string]*semaphore.Semaphore) {
-	go semaphores[utils.StraightHorizontal].Start()
-	go semaphores[utils.StraightVertical].Start()
+	go semaphores[utils.StraightVerticalToNorth].Start()
+	go semaphores[utils.StraightVerticalToSouth].Start()
+	go semaphores[utils.StraightHorizontalToEast].Start()
+	go semaphores[utils.StraightHorizontalToWest].Start()
+
 	go semaphores[utils.WestRight].Start()
 	go semaphores[utils.SouthRight].Start()
 	go semaphores[utils.WestLeft].Start()

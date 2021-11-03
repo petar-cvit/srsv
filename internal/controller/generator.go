@@ -30,8 +30,10 @@ func (g *Generator) Start() {
 	logger := logger.New()
 
 	go func() {
+		time.Sleep(10)
+
 		for {
-			time.Sleep(time.Second * 15)
+			time.Sleep(time.Second * 45)
 
 			pedestrian := actors.NewPedestrian(
 				utils.PedestrianWestToEastNorth,
@@ -47,8 +49,10 @@ func (g *Generator) Start() {
 	}()
 
 	go func() {
+		time.Sleep(time.Second * 6)
+
 		for {
-			time.Sleep(time.Second * 12)
+			time.Sleep(time.Second * 50)
 
 			pedestrian := actors.NewPedestrian(
 				utils.PedestrianEastToWestNorth,
@@ -64,8 +68,10 @@ func (g *Generator) Start() {
 	}()
 
 	go func() {
+		time.Sleep(time.Second * 35)
+
 		for {
-			time.Sleep(time.Second * 18)
+			time.Sleep(time.Second * 62)
 
 			pedestrian := actors.NewPedestrian(
 				utils.PedestrianWestToEastSouth,
@@ -81,8 +87,10 @@ func (g *Generator) Start() {
 	}()
 
 	go func() {
+		time.Sleep(time.Second * 70)
+
 		for {
-			time.Sleep(time.Second * 21)
+			time.Sleep(time.Second * 71)
 
 			pedestrian := actors.NewPedestrian(
 				utils.PedestrianEastToWestSouth,
@@ -99,7 +107,7 @@ func (g *Generator) Start() {
 
 	go func() {
 		for {
-			time.Sleep(time.Second * 12)
+			time.Sleep(time.Second * 60)
 
 			pedestrian := actors.NewPedestrian(
 				utils.PedestrianNorthToSouthEast,
@@ -115,8 +123,10 @@ func (g *Generator) Start() {
 	}()
 
 	go func() {
+		time.Sleep(time.Second * 25)
+
 		for {
-			time.Sleep(time.Second * 15)
+			time.Sleep(time.Second * 65)
 
 			pedestrian := actors.NewPedestrian(
 				utils.PedestrianNorthToSouthWest,
@@ -133,7 +143,7 @@ func (g *Generator) Start() {
 
 	go func() {
 		for {
-			time.Sleep(time.Second * 18)
+			time.Sleep(time.Second * 55)
 
 			pedestrian := actors.NewPedestrian(
 				utils.PedestrianSouthToNorthEast,
@@ -149,8 +159,10 @@ func (g *Generator) Start() {
 	}()
 
 	go func() {
+		time.Sleep(time.Second * 55)
+
 		for {
-			time.Sleep(time.Second * 21)
+			time.Sleep(time.Second * 51)
 
 			pedestrian := actors.NewPedestrian(
 				utils.PedestrianSouthToNorthWest,
@@ -166,13 +178,15 @@ func (g *Generator) Start() {
 	}()
 
 	go func() {
+		time.Sleep(time.Second * 15)
+
 		for {
-			time.Sleep(time.Second * 15)
+			time.Sleep(time.Second * 80)
 
 			car := actors.NewCar(
 				utils.StraightVerticalToNorth,
 				g.register,
-				g.semaphores[utils.StraightVertical].OutputChan,
+				g.semaphores[utils.StraightVerticalToNorth].OutputChan,
 				g.draw,
 				g.crossingChan,
 			)
@@ -181,13 +195,15 @@ func (g *Generator) Start() {
 	}()
 
 	go func() {
+		time.Sleep(time.Second * 10)
+
 		for {
-			time.Sleep(time.Second * 10)
+			time.Sleep(time.Second * 90)
 
 			car := actors.NewCar(
 				utils.StraightVerticalToSouth,
 				g.register,
-				g.semaphores[utils.StraightVertical].OutputChan,
+				g.semaphores[utils.StraightVerticalToSouth].OutputChan,
 				g.draw,
 				g.crossingChan,
 			)
@@ -196,13 +212,14 @@ func (g *Generator) Start() {
 	}()
 
 	go func() {
+		time.Sleep(time.Second * 5)
 		for {
-			time.Sleep(time.Second * 5)
+			time.Sleep(time.Second * 40)
 
 			car := actors.NewCar(
 				utils.StraightHorizontalToWest,
 				g.register,
-				g.semaphores[utils.StraightHorizontal].OutputChan,
+				g.semaphores[utils.StraightHorizontalToWest].OutputChan,
 				g.draw,
 				g.crossingChan,
 			)
@@ -211,13 +228,15 @@ func (g *Generator) Start() {
 	}()
 
 	go func() {
+		time.Sleep(time.Second * 10)
+
 		for {
-			time.Sleep(time.Second * 10)
+			time.Sleep(time.Second * 70)
 
 			car := actors.NewCar(
 				utils.StraightHorizontalToEast,
 				g.register,
-				g.semaphores[utils.StraightHorizontal].OutputChan,
+				g.semaphores[utils.StraightHorizontalToEast].OutputChan,
 				g.draw,
 				g.crossingChan,
 			)
