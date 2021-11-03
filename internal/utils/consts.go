@@ -7,8 +7,11 @@ const Red = 0
 const Green = 1
 
 // vehicle Semaphores
-const StraightHorizontal = "straightHorizontal"
-const StraightVertical = "straightVertical"
+//const StraightVerticalNorth = "straightVerticalNorth"
+//const StraightVerticalSouth = "straightVerticalSouth"
+//
+//
+//const StraightHorizontal = "straightHorizontal"
 
 const WestRight = "westRight"
 const SouthRight = "southRight"
