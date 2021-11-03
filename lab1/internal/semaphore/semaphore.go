@@ -1,6 +1,6 @@
 package semaphore
 
-import "lab2/internal/utils"
+import "lab2/lab1/internal/utils"
 
 type Semaphore struct {
 	Current    int

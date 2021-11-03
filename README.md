@@ -1,4 +1,4 @@
-# srsv.lab1
+# srsv labs
 
-Run traffic simulation with:  
- `make start`
+Petar Cvitanović  
+0036518121

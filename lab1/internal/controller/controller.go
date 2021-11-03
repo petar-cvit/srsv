@@ -3,9 +3,9 @@ package controller
 import (
 	"time"
 
-	"lab2/internal/draw"
-	"lab2/internal/semaphore"
-	"lab2/internal/utils"
+	"lab2/lab1/internal/draw"
+	"lab2/lab1/internal/semaphore"
+	"lab2/lab1/internal/utils"
 )
 
 type Controller struct {

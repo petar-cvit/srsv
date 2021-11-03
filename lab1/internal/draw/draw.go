@@ -2,14 +2,14 @@ package draw
 
 import (
 	"fmt"
-	"lab2/internal/logger"
+	"lab2/lab1/internal/logger"
 	"os"
 	"os/exec"
 	"strings"
 
 	"github.com/TwiN/go-color"
 
-	"lab2/internal/utils"
+	"lab2/lab1/internal/utils"
 )
 
 type Drawer struct {

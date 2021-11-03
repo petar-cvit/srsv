@@ -1,7 +1,7 @@
 package main
 
 import (
-	"lab2/internal/controller"
+	"lab2/lab1/internal/controller"
 )
 
 func main() {
