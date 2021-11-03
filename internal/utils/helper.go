@@ -1,8 +1,12 @@
 package utils
 
-import "lab2/internal/semaphore"
+type SemaphoreMessage struct {
+	Position string
+	State    int
+}
 
-type Payload struct {
-	Time       int
-	Semaphores map[string]*semaphore.Semaphore
+type CrossingMessage struct {
+	Position string
+	Crossing bool
+	Car      bool
 }
