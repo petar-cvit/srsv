@@ -1,7 +1,7 @@
 package actors
 
 import (
-	"lab2/lab1/internal/utils"
+	"github.com/petar-cvit/srsv.lab1/internal/utils"
 )
 
 type Car struct {

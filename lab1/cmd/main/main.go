@@ -1,7 +1,7 @@
 package main
 
 import (
-	"lab2/lab1/internal/controller"
+	"github.com/petar-cvit/srsv.lab1/internal/controller"
 )
 
 func main() {
