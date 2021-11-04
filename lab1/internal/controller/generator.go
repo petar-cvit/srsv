@@ -203,7 +203,7 @@ func (g *Generator) Start() {
 	go func() {
 		time.Sleep(time.Second * 5)
 		for {
-			time.Sleep(time.Second * 40)
+			time.Sleep(time.Second * 70)
 
 			car := actors.NewCar(
 				utils.StraightHorizontalToWest,

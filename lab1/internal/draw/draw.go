@@ -115,9 +115,9 @@ func (d *Drawer) DrawCrossing() {
 	fmt.Println("\t     " +
 		drawSingleVertical(utils.PedestrianEastDraw, d.crossing) + "\t\t\t    " +
 		drawSingleVertical(utils.StraightVerticalToSouth, d.crossing) +
-		"\t\t" +
+		"    \t    " +
 		drawSingleVertical(utils.StraightVerticalToNorth, d.crossing) +
-		"\t\t " +
+		"    \t " +
 		drawSemaphore(d.semaphores[utils.WestRight]) + "         " +
 		drawSingleVertical(utils.PedestrianEastDraw, d.crossing))
 	fmt.Println("- - - - - - -" +
@@ -245,11 +245,6 @@ func (d *Drawer) DrawCrossing() {
 		drawWaitingCombined(utils.StraightVerticalToNorth, d.waiting, d.crossing) +
 		"   ¦\t|\t\t\t")
 
-	for k, v := range d.crossing {
-		fmt.Println(k, v)
-	}
-
-	fmt.Println()
 	for k, v := range d.waiting {
 		fmt.Println(k, v)
 	}
@@ -345,6 +340,32 @@ func invalidateWaitingMap(payload *utils.CrossingMessage, waiting map[string]int
 	if payload.Position == utils.PedestrianSouthDraw {
 		waiting[utils.PedestrianEastToWestSouth] = utils.NotWaiting
 		waiting[utils.PedestrianWestToEastSouth] = utils.NotWaiting
+	}
+
+	if payload.Position == utils.PedestrianEastDraw {
+		waiting[utils.PedestrianNorthToSouthEast] = utils.NotWaiting
+		waiting[utils.PedestrianSouthToNorthEast] = utils.NotWaiting
+	}
+
+	if payload.Position == utils.PedestrianWestDraw {
+		waiting[utils.PedestrianNorthToSouthWest] = utils.NotWaiting
+		waiting[utils.PedestrianSouthToNorthWest] = utils.NotWaiting
+	}
+
+	if payload.Position == utils.StraightHorizontalToWest {
+		waiting[utils.StraightHorizontalToWest] = utils.NotWaiting
+	}
+
+	if payload.Position == utils.StraightHorizontalToEast {
+		waiting[utils.StraightHorizontalToEast] = utils.NotWaiting
+	}
+
+	if payload.Position == utils.StraightVerticalToNorth {
+		waiting[utils.StraightVerticalToNorth] = utils.NotWaiting
+	}
+
+	if payload.Position == utils.StraightVerticalToSouth {
+		waiting[utils.StraightVerticalToSouth] = utils.NotWaiting
 	}
 
 	return waiting

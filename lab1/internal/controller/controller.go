@@ -24,10 +24,8 @@ func New() {
 	generator.Start()
 
 	go func() {
-		t := 0
-
 		for {
-			t++
+			// region first cycle
 
 			semaphores[utils.StraightVerticalToSouth].StateChan <- utils.Red
 			semaphores[utils.StraightVerticalToNorth].StateChan <- utils.Red
@@ -39,6 +37,8 @@ func New() {
 
 			semaphores[utils.WestLeft].StateChan <- utils.Red
 			semaphores[utils.SouthLeft].StateChan <- utils.Red
+
+			time.Sleep(time.Second * 2)
 
 			// north pedestrian
 			semaphores[utils.PedestrianNorthLeft].StateChan <- utils.Green
@@ -56,19 +56,10 @@ func New() {
 			semaphores[utils.PedestrianWestNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianWestSouth].StateChan <- utils.Red
 
-			time.Sleep(time.Second * 10)
-			t++
+			time.Sleep(time.Second * 15)
+			// endregion
 
-			semaphores[utils.StraightVerticalToSouth].StateChan <- utils.Red
-			semaphores[utils.StraightVerticalToNorth].StateChan <- utils.Red
-			semaphores[utils.StraightHorizontalToEast].StateChan <- utils.Red
-			semaphores[utils.StraightHorizontalToWest].StateChan <- utils.Red
-
-			semaphores[utils.WestRight].StateChan <- utils.Red
-			semaphores[utils.SouthRight].StateChan <- utils.Red
-
-			semaphores[utils.WestLeft].StateChan <- utils.Green
-			semaphores[utils.SouthLeft].StateChan <- utils.Green
+			// region second cycle
 
 			// north pedestrian
 			semaphores[utils.PedestrianNorthLeft].StateChan <- utils.Red
@@ -86,8 +77,24 @@ func New() {
 			semaphores[utils.PedestrianWestNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianWestSouth].StateChan <- utils.Red
 
-			time.Sleep(time.Second * 10)
-			t++
+			time.Sleep(time.Second * 2)
+
+			semaphores[utils.StraightVerticalToSouth].StateChan <- utils.Red
+			semaphores[utils.StraightVerticalToNorth].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontalToEast].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontalToWest].StateChan <- utils.Red
+
+			semaphores[utils.WestRight].StateChan <- utils.Red
+			semaphores[utils.SouthRight].StateChan <- utils.Red
+
+			semaphores[utils.WestLeft].StateChan <- utils.Green
+			semaphores[utils.SouthLeft].StateChan <- utils.Green
+
+			time.Sleep(time.Second * 15)
+
+			// endregion
+
+			// region third cycle
 
 			semaphores[utils.StraightVerticalToSouth].StateChan <- utils.Green
 			semaphores[utils.StraightVerticalToNorth].StateChan <- utils.Green
@@ -99,6 +106,8 @@ func New() {
 
 			semaphores[utils.WestLeft].StateChan <- utils.Red
 			semaphores[utils.SouthLeft].StateChan <- utils.Red
+
+			time.Sleep(time.Second * 2)
 
 			// north pedestrian
 			semaphores[utils.PedestrianNorthLeft].StateChan <- utils.Red
@@ -116,19 +125,11 @@ func New() {
 			semaphores[utils.PedestrianWestNorth].StateChan <- utils.Green
 			semaphores[utils.PedestrianWestSouth].StateChan <- utils.Green
 
-			time.Sleep(time.Second * 10)
-			t++
+			time.Sleep(time.Second * 15)
 
-			semaphores[utils.StraightVerticalToSouth].StateChan <- utils.Red
-			semaphores[utils.StraightVerticalToNorth].StateChan <- utils.Red
-			semaphores[utils.StraightHorizontalToEast].StateChan <- utils.Red
-			semaphores[utils.StraightHorizontalToWest].StateChan <- utils.Red
+			// endregion
 
-			semaphores[utils.WestRight].StateChan <- utils.Green
-			semaphores[utils.SouthRight].StateChan <- utils.Green
-
-			semaphores[utils.WestLeft].StateChan <- utils.Red
-			semaphores[utils.SouthLeft].StateChan <- utils.Red
+			// region fourth cycle
 
 			// north pedestrian
 			semaphores[utils.PedestrianNorthLeft].StateChan <- utils.Red
@@ -146,7 +147,22 @@ func New() {
 			semaphores[utils.PedestrianWestNorth].StateChan <- utils.Red
 			semaphores[utils.PedestrianWestSouth].StateChan <- utils.Red
 
+			time.Sleep(time.Second * 2)
+
+			semaphores[utils.StraightVerticalToSouth].StateChan <- utils.Red
+			semaphores[utils.StraightVerticalToNorth].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontalToEast].StateChan <- utils.Red
+			semaphores[utils.StraightHorizontalToWest].StateChan <- utils.Red
+
+			semaphores[utils.WestRight].StateChan <- utils.Green
+			semaphores[utils.SouthRight].StateChan <- utils.Green
+
+			semaphores[utils.WestLeft].StateChan <- utils.Red
+			semaphores[utils.SouthLeft].StateChan <- utils.Red
+
 			time.Sleep(time.Second * 10)
+
+			// endregion
 		}
 	}()
 }
