@@ -69,6 +69,6 @@ func (e *Elevator) move() {
 			e.Direction = utils.Waiting
 		}
 		e.drawChan <- true
-		time.Sleep(time.Millisecond * 4000)
+		time.Sleep(time.Millisecond * 1500)
 	}
 }
