@@ -1,6 +1,9 @@
 package main
 
 import (
+	"os"
+	"strconv"
+
 	"srsv/internal"
 	"srsv/internal/draw"
 	"srsv/internal/elevator"
@@ -9,6 +12,11 @@ import (
 )
 
 func main() {
+	traffic := int64(2)
+	if len(os.Args) > 1 {
+		traffic, _ = strconv.ParseInt(os.Args[1], 10, 64)
+	}
+
 	numOfFloors := 5
 
 	passengersToDrawChan := make(chan *passenger.Passenger)
@@ -23,7 +31,7 @@ func main() {
 	go drawer.Start()
 	go elevator.Start()
 
-	go internal.Simulate(passengers, passengersToDrawChan)
+	go internal.Simulate(passengers, passengersToDrawChan, traffic)
 
 	// invoke drawing
 	elevatorToDrawChan <- true
